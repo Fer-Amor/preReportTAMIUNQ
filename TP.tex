@@ -1,0 +1,109 @@
+	\documentclass[12pt,a4paper,titlepage]{article}
+	\usepackage[utf8]{inputenc}
+	%\DeclareUnicodeCharacter{04F1}{ }	
+	\usepackage[spanish,es-tabla]{babel}
+	\usepackage{geometry}
+	\geometry{left=2 cm , right=2cm, top=2 cm, bottom=2cm}
+	\usepackage{graphicx}
+%	\usepackage{mathpple}
+%	\usepackage{palatino}
+%	\usepackage{fancyhdr}
+%	\usepackage{url}
+	\usepackage{amsthm}
+	\usepackage{amsmath}
+%	\usepackage{sectsty}
+	\usepackage{color}
+%	\allsectionsfont{\sffamily}
+	\usepackage{amssymb}
+	\usepackage{enumerate}
+	
+  \usepackage[makeroom]{cancel}	
+	
+	\usepackage{listings}
+%	\usepackage{pdfpages}
+%	\usepackage{bbm}
+\definecolor{darkGreen}{rgb}{0,0.4,0}
+
+%Agrego selector de interlineado para matrices {amsmath}
+%https://tex.stackexchange.com/questions/14071/how-can-i-increase-the-line-spacing-in-a-matrix
+\makeatletter
+\renewcommand*\env@matrix[1][\arraystretch]{%
+  \edef\arraystretch{#1}%
+  \hskip -\arraycolsep
+  \let\@ifnextchar\new@ifnextchar
+  \array{*\c@MaxMatrixCols c}}
+\makeatother
+
+\lstset{
+    rulecolor=\color{black},
+    keywordstyle=\color{blue},      % keyword style
+  	commentstyle=\color{darkGreen},   % comment style
+  	stringstyle=\color{red}
+}
+
+%\mathbb{Z} Z de conjunto de nros enteros
+
+
+
+%Latex o PDFLatex?? (Elige automaticamente que archivo de gráfico incluir)
+
+%	\ifx\pdfoutput\undefined    %No corre pdflatex
+%	\RequirePackage{epsfig}
+%	\else
+%	\RequirePackage[pdftex]{epsfig}
+%	\fi
+%	\theoremstyle{remark}
+%	\newtheorem{eje}{Ejemplo}
+%
+%%% Fancyheadings stuff
+%
+%	\usepackage{fancyhdr}
+%	\pagestyle{fancy}
+%	\lhead{\nouppercase{\small\leftmark}}
+%	\rhead{\nouppercase{\small Trabajo Práctico Obligatirio}}
+%	\lfoot{}
+%	%\lfoot{Edición:}
+%	%\lfoot{2014}
+%	\rfoot{Control Automático I}
+%	\renewcommand{\footrulewidth}{0.4pt}
+%	\newcommand{\clearemptydoublepage}
+%	{\newpage\thispagestyle{empty}\cleardoublepage}
+%	\theoremstyle{remark}
+%	\newtheorem{Not}{Nota}
+%	\newtheorem{Ej}{Ejemplo}%1º nombre del entorno. 2º lo que aparece.
+%	\newtheorem{ejer}{Ejercicio}
+\begin{document}
+\section{Clear Objective}
+Develop a system to provide safe cooperative interaction between a robotic manipulator and a human operator.
+
+\section{Introduction}
+In order to sense the 3D space around the manipulator, computer vision was employed. (completar con definicion de vision artificial, etc...)
+
+The eyes of the system were the two cameras present on a Kinect V2 sensor. This device provided the system with an RGB camera, and a special depth camera. The latter consists in an IR camera with electronics capable of providing object distance measures by sensing the flight time of IR beams emitted from the Kinect. (+ sarasa kinect?)
+
+Digital cameras are light sensible instruments that can capture images in front of them similar as the human eye does(???). The simplest mathematical camera model is the pinhole model, which emulates the way light passes through an area-less point and projects in a perpendicular plane situated one meter from the aperture. This model is linear, with all the mathematical advantages this proveys. In a large number of cameras and applications, it is not necessary to elevate the model complexity, and this model provides satisfactory results.
+
+ArUco markers are graphical binary patterns through which a calibrated camera can establish a virtual frame to a plane in the environment. This is, the system now gains not only the translation distance to the center of the marker, but also the rotation and inclination of that plane respect ot the camera model.(+ sarasa aruco)
+
+In a 3D space just as we humans perceive the physical world, a full pose is defined through linear algebra by 6 parameters referred to a frame: 3D cartesian coortinates $X$,$Y$ and $Z$, and inclination angles $\alpha$, $\beta$ and $\gamma$. 
+Frames can be determined by reference to other frames employing linear operations, tipically translations and rotations. Both the latter two can be combined in a dot product operation with a rototranslation matrix.
+
+\section{problem statement?}
+Robots are dangerous to human beings. 
+Cooperation is difficult to achieve with a physical security barrier inbetween.
+Industry 4.0 is including cooperation robots (CoBots) in industrial environments, but this is something too new yet and the risks are still not fully clear???
+???
+???
+
+\section{Experimental Setup}
+The system coding was developed in Python$r$ and Matlab$r$, and implemented in Matlab$r$. The robotic manipulator employed was a Scorbot ER4-U, property of TAMIU Engineering?. The computer vision sensor was a Kinect for Windows V2. A piece of fluorescent yellow security strip was sewed to a wristband. An ArUco marker of $7x7$ bits was also used.
+
+The Kinect was mounted in the lab roof pointing downwards, approximately $1.8$ meters above the robot's zero plane. The ArUco marker was affixed in the robot's desk, in a zone visible by the Kinect and reachable by the Scorbot's tool. The marker's orientation was coplanar with the robot's base frame.
+
+Pictures of the wristband were taken with both RGB and IR cameras. The wristband was isolated from the RGB image by the intersection of two filters: a hue filter in HSV space, and a green index filter in RGB space. The filtered image then was binarized and subjected to an image opening to erase debris. A bounding box was calculated then to the remaining area.
+
+Intrinsic calibration parameters for both cameras were  
+
+
+
+\end{document}
