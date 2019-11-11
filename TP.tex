@@ -90,7 +90,9 @@ Frames can be determined by reference to other frames employing linear operation
 
 \section{problem statement?}
 Robots are dangerous to human beings. 
+
 Cooperation is difficult to achieve with a physical security barrier inbetween.
+
 Industry 4.0 is including cooperation robots (CoBots) in industrial environments, but this is something too new yet and the risks are still not fully clear???
 ???
 ???
@@ -100,9 +102,37 @@ The system coding was developed in Python$r$ and Matlab$r$, and implemented in M
 
 The Kinect was mounted in the lab roof pointing downwards, approximately $1.8$ meters above the robot's zero plane. The ArUco marker was affixed in the robot's desk, in a zone visible by the Kinect and reachable by the Scorbot's tool. The marker's orientation was coplanar with the robot's base frame.
 
+An RGB image with the ArUco marker fully visible was processed with the corresponding ArUco libraries in openCV in a Python$r$ script. This allowed to obtain not only the ArUco virtual frame, but also the rototranslation matrix between the RGB camera model and the ArUco frame.
+
+A pencil was put in the Scorbot's claw, alligned with the $Z$ axis of the robot's tool frame. Then the tip of the pencil was positioned, manually via the manipulator's keypad, just above the center of the ArUco marker. The cartesian $X$ and $Y$ coordinates of that position were recorded. With that data, and by knowing that the marker was in the same $Z$ plane as the scorbot's base, and also by knowing the relative rotation alongside the $Z$ axis of the marker and the robot, the rototranslation matrix that linked both the ArUco frame and the manipulator's base frame was determined. 
+
 Pictures of the wristband were taken with both RGB and IR cameras. The wristband was isolated from the RGB image by the intersection of two filters: a hue filter in HSV space, and a green index filter in RGB space. The filtered image then was binarized and subjected to an image opening to erase debris. A bounding box was calculated then to the remaining area.
 
-Intrinsic calibration parameters for both cameras were  
+Intrinsic calibration parameters for both cameras were found on internet. Empyrical evidence showed that those parameters were at least suitable for the system developing. 
+
+Experiments were done to map the depth points over the corresponding RGB ones. Depth pixels were de-escalated from the depth image, and then reescalated to fit the RGB one, through the corresponding intrinsic parameters. A manual bias correction was made to adjust the projection. This fit seemed to be correct in a significant radius around the center of the composed image. Given that the robot's workspace was confined in that area, this projection was employed.
+
+Having the wristband detected and confined in the RGB image, all the depth pixels mapped inside this area were gathered. A histogram of that set was made, and that could prove that the statistical median was a good depth value for the wristband.
+
+The cartesian coordinates of the center of the wristband were recovered from the nearest pixel to the center of mass of the filtered RGB image, the depth value above calculated, and the RGB camera model. This coordinates were referred to the RGB camera model.
+
+The coordinates were translated to the ArUco frame through a simple dot product operation with the corresponding matrix.
+
+Then the coordinates were translated from the marker to the robot's reference frame, via the corresponding matrix.
+
+As a final step, the coordinates were converted from meters to millimeters, and rounded.
+
+Once all the steps were proven to be functional, a Matlab script to automate the process was coded. The script would initiate the sensor, capture images at a fixed rate, and analyse every RGB image to try to detect the wristband. An area thresold was imposed to the binarized image in order to determine if the wristband was present or not. Only if the threshold was surpassed the coordinate computation algorithm ran.
+
+
+In order to achieve data to analyse errors, several coordinates of the wristband in a special setup were computed. The wristband was placed over a set of blocks at a fixed height over the scorbot's base plane. This rig was then placed at different but known $XY$ positions, always inside the manipulator's reachable radius. All the input-outputs were written down.
+
+
+
+
+
+
+
 
 
 
