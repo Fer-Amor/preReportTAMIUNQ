@@ -125,7 +125,27 @@ As a final step, the coordinates were converted from meters to millimeters, and 
 Once all the steps were proven to be functional, a Matlab script to automate the process was coded. The script would initiate the sensor, capture images at a fixed rate, and analyse every RGB image to try to detect the wristband. An area thresold was imposed to the binarized image in order to determine if the wristband was present or not. Only if the threshold was surpassed the coordinate computation algorithm ran.
 
 
-In order to achieve data to analyse errors, several coordinates of the wristband in a special setup were computed. The wristband was placed over a set of blocks at a fixed height over the scorbot's base plane. This rig was then placed at different but known $XY$ positions, always inside the manipulator's reachable radius. All the input-outputs were written down.
+In order to achieve data to analyse errors, several coordinates of the wristband in a special setup were computed. The wristband was placed over a set of blocks at a fixed height over the scorbot's base plane. This rig was then placed at different but known $XY$ positions, always inside the manipulator's reachable radius. All the results were written down.
+
+
+\section{Results}
+
+The system achieved was able to detect the special wristband, isolate its 3D coordinates, refer them to the robot's frame, and pass them to the manipulator. All of the above in a linear environment with a determined systematic error.
+
+Applying the hue filter to a captured image resulted in FigureXX1. It is noticeable that not only the wristband passes the filter, but also a lot of noise.
+(FigXX1)
+
+Filtering the same captured image with 
+
+
+The HSV filter
+
+
+\section{Challenges and Solutions}
+
+Passing coordinates to the robot resulted in a challenge given the hardware available. The only communication path between the robot's controller and the PC was a USB connection via a propietary windows driver, that could only normally work inside the propietary robot's software. There was no planned way of modifying or adding a new coordinate inside this program in a live application. Luckily, on internet there was available for Matlab$r$ a user-made library to control the Scorbot ER-4U. With that library, live coordinate passing to the manipulator was possible.
+
+The time in the lab was limited, and a lot of it was spent in configuring the hardware. The efforts were then focused more on developing the system as a whole, and not so much on polishing individual details.
 
 
 
